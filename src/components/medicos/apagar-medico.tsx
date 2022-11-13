@@ -16,6 +16,7 @@ const ApagarMedicoModal = ({
 	const handleClose = () => setOpen(false);
 	const [loader, setLoader] = useState(false);
 	const medicoMutation = trpc.medico.delete.useMutation();
+	const contextUtils = trpc.useContext();
 	const userMutation = trpc.user.delete.useMutation();
 
 	const handleDelete = async () => {
@@ -24,6 +25,7 @@ const ApagarMedicoModal = ({
 			await medicoMutation.mutateAsync({ userId: medico.userId });
 			await userMutation.mutateAsync({ id: medico.userId });
 			toast.success("Apagado com sucesso!");
+			await contextUtils.medico.all.refetch();
 			setOpen(false);
 		} catch (error) {
 			toast.error("Algum erro aconteceu");

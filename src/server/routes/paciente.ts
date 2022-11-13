@@ -11,6 +11,22 @@ export const pacienteRouter = router({
 			},
 		});
 	}),
+	byId: publicProcedure
+		.input(
+			z.object({
+				id: z.string(),
+			})
+		)
+		.query(async ({ input }) => {
+			return await prisma.paciente.findUnique({
+				where: {
+					id: input.id,
+				},
+				include: {
+					user: true,
+				},
+			});
+		}),
 	byUserId: publicProcedure
 		.input(
 			z.object({

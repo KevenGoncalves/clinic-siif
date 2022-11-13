@@ -96,6 +96,8 @@ const Login = () => {
 				if (result?.error) {
 					throw new Error(result.error.message);
 				}
+				setChange(false);
+				setCreateUser({ bi: "", birthday: "", email: "", firstName: "", lastName: "", password: "" });
 			}
 		} catch (error) {
 			toast.error("Algum erro aconteceu!");

@@ -1,10 +1,13 @@
 import { Person, File, PeopleMultiple, SignOut, Calendar } from "akar-icons";
+import { useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { userAtom } from "../../atom/user-atom";
 import { logout } from "../../services/auth.service";
 
-const Sidebar = ({ user }: { user: any }) => {
+const Sidebar = () => {
 	const router = useRouter();
+	const [user] = useAtom(userAtom);
 
 	const handleLogout = async () => {
 		try {
@@ -22,13 +25,13 @@ const Sidebar = ({ user }: { user: any }) => {
 					<Person strokeWidth={2} size={50} />
 				</div>
 				<h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 cursor-pointer">
-					{`${user.firstName ?? ""} ${user.lastName ?? ""}`}
+					{`${user?.firstName ?? ""} ${user?.lastName ?? ""}`}
 				</h4>
-				<p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400 cursor-pointer ">{`${user.role}`}</p>
+				<p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400 cursor-pointer ">{`${user?.role}`}</p>
 			</div>
 			<div className="flex flex-col justify-between flex-1 mt-6">
 				<nav>
-					{user.role === "PACIENTE" ? (
+					{user?.role === "PACIENTE" ? (
 						<Link
 							className={`flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform ${
 								router.asPath == "/consultas"
@@ -41,7 +44,7 @@ const Sidebar = ({ user }: { user: any }) => {
 							<span className="mx-4 font-medium">Consultas</span>
 						</Link>
 					) : null}
-					{user.role === "MEDICO" ? (
+					{user?.role === "MEDICO" ? (
 						<Link
 							className={`flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform ${
 								router.asPath == "/agendas"
@@ -54,7 +57,7 @@ const Sidebar = ({ user }: { user: any }) => {
 							<span className="mx-4 font-medium">Agendas</span>
 						</Link>
 					) : null}
-					{user.role === "MEDICO" ? (
+					{user?.role === "MEDICO" ? (
 						<Link
 							className={`flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform ${
 								router.asPath == "/pacientes"
@@ -67,7 +70,7 @@ const Sidebar = ({ user }: { user: any }) => {
 							<span className="mx-4 font-medium">Pacientes</span>
 						</Link>
 					) : null}
-					{user.role === "ADMIN" ? (
+					{user?.role === "ADMIN" ? (
 						<Link
 							className={`flex items-center px-4 py-2 mt-5 transition-colors duration-300 transform ${
 								router.asPath == "/medicos"

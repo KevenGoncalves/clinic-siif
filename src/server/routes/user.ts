@@ -28,6 +28,10 @@ export const userRouter = router({
 		.query(async ({ input }) => {
 			return await prisma.user.findFirst({
 				where: { email: input.email! },
+				include: {
+					Medico: true,
+					paciente: true,
+				},
 			});
 		}),
 	create: publicProcedure

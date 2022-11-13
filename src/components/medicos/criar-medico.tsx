@@ -59,6 +59,8 @@ const CriarMedicoModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch<
 				if (result?.error) {
 					throw new Error(result.error.message);
 				}
+				await contextUtils.medico.all.refetch();
+				setOpen(false);
 			}
 		} catch (error) {
 			toast.error("Algum erro aconteceu!");

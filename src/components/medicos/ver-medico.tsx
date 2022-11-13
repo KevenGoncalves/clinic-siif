@@ -21,6 +21,7 @@ const VerMedicoModal = ({
 	const [medico, setMedico] = useState({ time: medicoParams.time });
 	const updateUser = trpc.user.update.useMutation();
 	const updateMedico = trpc.medico.update.useMutation();
+	const contextUtils = trpc.useContext();
 
 	const handleUpdate = async () => {
 		try {
@@ -30,6 +31,8 @@ const VerMedicoModal = ({
 			await updateMedico.mutateAsync({ time: medico.time, userId: medicoParams.userId });
 
 			toast.success("Conta atualizada!");
+			await contextUtils.medico.all.refetch();
+			setOpen(false);
 		} catch (error) {
 			toast.error("Algum Erro aconteceu!");
 			console.log(error);

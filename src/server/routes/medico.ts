@@ -8,6 +8,18 @@ export const medicoRouter = router({
 			include: { user: true, Consulta: true },
 		});
 	}),
+	byId: publicProcedure
+		.input(
+			z.object({
+				id: z.string(),
+			})
+		)
+		.query(async ({ input }) => {
+			return await prisma.medico.findUnique({
+				where: { id: input.id },
+				include: { user: true },
+			});
+		}),
 	byUserId: publicProcedure
 		.input(
 			z.object({

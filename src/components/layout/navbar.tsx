@@ -46,7 +46,7 @@ const Navbar = () => {
 							</button>
 						</li>
 					) : null}
-					<li>
+					{/* <li>
 						<button
 							onClick={handleDrop}
 							className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
@@ -54,7 +54,7 @@ const Navbar = () => {
 							<Bell strokeWidth={2} size={24} />
 						</button>
 
-						{/* Dropdown menu */}
+						
 						<div
 							className={`${
 								drop ? "h-60 visible" : "h-0 invisible"
@@ -79,7 +79,7 @@ const Navbar = () => {
 								Sign Out
 							</a>
 						</div>
-					</li>
+					</li> */}
 				</ul>
 			</div>
 			<MarcarConsultaModal open={consulta} setOpen={setConsulta} />

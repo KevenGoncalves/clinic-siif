@@ -6,7 +6,7 @@ import NovaAgenda from "../components/agendas/nova-agenda";
 import AgendaAtual from "../components/agendas/agenda-atual";
 import AgendaPassada from "../components/agendas/agenda-passada";
 
-const Component = () => (
+const AgendasTabs = () => (
 	<Tabs>
 		<TabList className="flex flex-col py-4">
 			<div className="flex items-center justify-center cursor-pointer">
@@ -50,7 +50,7 @@ const Agendas = () => {
 	return (
 		<Layout>
 			<div className="px-10 pb-10">
-				<Component />
+				<AgendasTabs />
 			</div>
 		</Layout>
 	);

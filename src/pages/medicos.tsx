@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import ApagarMedicoModal from "../components/medicos/apagar-medico";
 import VerMedicoModal from "../components/medicos/ver-medico";
 import Layout from "../components/shared/layout";
+import Loading from "../components/shared/loading";
+import NoContent from "../components/shared/no-content";
 import Title from "../components/shared/title";
 import { trpc } from "../lib/trpc";
 
@@ -31,12 +33,10 @@ const Card = ({ medico }: { medico: Medico & { user: User } }) => {
 	);
 };
 
-const WithoutMedicps = () => <div className="w-full text-center font-semibold py-10">Sem Médicos</div>;
-
 const Medicos = () => {
 	const medicos = trpc.medico.all.useQuery();
 
-	if (medicos.isLoading) return <div>Loading...</div>;
+	if (medicos.isLoading) return <Loading />;
 
 	return (
 		<Layout>
@@ -46,7 +46,7 @@ const Medicos = () => {
 					{medicos.data?.map((medico, index) => (
 						<Card key={index} medico={medico} />
 					))}
-					{medicos.data?.length === 0 ? <WithoutMedicps /> : null}
+					{medicos.data?.length === 0 ? <NoContent title="Sem Médicos" /> : null}
 				</div>
 			</div>
 		</Layout>

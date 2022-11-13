@@ -1,20 +1,80 @@
-import { Dispatch, SetStateAction } from "react";
+import { Consulta, Medico, Paciente } from "@prisma/client";
+import { ArrowCycle } from "akar-icons";
+import { Dispatch, SetStateAction, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { trpc } from "../../lib/trpc";
 
-const CriarAgendaModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) => {
+const CriarAgendaModal = ({
+	agenda,
+	open,
+	setOpen,
+}: {
+	open: boolean;
+	setOpen: Dispatch<SetStateAction<boolean>>;
+	agenda: Consulta & {
+		paciente: Paciente;
+		medico: Medico;
+	};
+}) => {
 	const handleClose = () => setOpen(false);
+	const updateMutation = trpc.consulta.update.useMutation();
+	const contextUtil = trpc.useContext();
+	const [loader, setLoader] = useState(false);
+	const [deny, setDeny] = useState(false);
 
 	if (!open) return null;
+
+	const handleAccept = async () => {
+		try {
+			setLoader(true);
+			await updateMutation.mutateAsync({
+				date: agenda.date,
+				id: agenda.id,
+				medicoId: agenda.medicoId,
+				pacienteId: agenda.pacienteId,
+				consultaState: "PROGRESSO",
+			});
+			await contextUtil.consulta.allByMedicoId.refetch({ medicoId: agenda.medicoId });
+			toast.success("Consulta aceite");
+		} catch (error) {
+			toast.error("Algum erro aconteceu!");
+			console.log(error);
+		} finally {
+			setLoader(false);
+		}
+	};
+
+	const handleDeny = async () => {
+		try {
+			setDeny(true);
+			await updateMutation.mutateAsync({
+				date: agenda.date,
+				id: agenda.id,
+				medicoId: agenda.medicoId,
+				pacienteId: agenda.pacienteId,
+				consultaState: "REJEITADA",
+			});
+			await contextUtil.consulta.allByMedicoId.refetch({ medicoId: agenda.medicoId });
+			toast.success("Consulta Rejeitada");
+		} catch (error) {
+			toast.error("Algum erro aconteceu!");
+			console.log(error);
+		} finally {
+			setDeny(false);
+		}
+	};
 
 	return (
 		<div className="max-w-2xl mx-auto">
 			<div className="overflow-x-hidden bg-black/10 backdrop-blur-sm overflow-y-auto fixed h-full left-0 right-0 inset-0 z-50 justify-center items-center">
+				<ToastContainer />
 				<div className="top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 relative w-full max-w-2xl h-auto">
 					{/* Modal content */}
 					<div className="bg-white rounded-lg shadow-md relative dark:bg-black m-2 dark:border dark:border-zinc-500">
 						{/* Modal header */}
 						<div className="flex items-start justify-between p-5 border-b rounded-t dark:border-zinc-800">
 							<h3 className="text-zinc-900 text-xl lg:text-2xl font-semibold dark:text-white">
-								Finalizar Agenda
+								Aceitar Agenda
 							</h3>
 							<button
 								onClick={handleClose}
@@ -35,8 +95,25 @@ const CriarAgendaModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch<
 							</button>
 						</div>
 						{/* Modal body */}
-
-						<div className="leading-relaxed p-6 space-y-6">Ola</div>
+						<div className="leading-relaxed p-6 space-y-6">
+							<span>Você deseja aceitar está consulta?</span>
+							<div className="flex gap-4">
+								<button
+									onClick={handleDeny}
+									className="w-full bg-red-500 text-white py-2 px-10 rounded shadow hover:bg-red-600 focus:ring-2 focus:ring-red-300 flex items-center justify-center gap-2"
+								>
+									Rejeitar
+									{!deny ? null : <ArrowCycle size={16} className="animate-spin" />}
+								</button>
+								<button
+									onClick={handleAccept}
+									className="w-full bg-blue-500 text-white py-2 px-10 rounded shadow hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 flex items-center justify-center gap-2"
+								>
+									Aceitar
+									{!loader ? null : <ArrowCycle size={16} className="animate-spin" />}
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

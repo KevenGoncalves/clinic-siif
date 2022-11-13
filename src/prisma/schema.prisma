@@ -16,6 +16,13 @@ enum Role {
   ADMIN
 }
 
+enum State {
+  PROGRESSO
+  CONCLUIDA
+  PENDENTE
+  REJEITADA
+}
+
 model User {
   id        String    @id @default(uuid())
   firstName String
@@ -46,13 +53,13 @@ model Medico {
 }
 
 model Consulta {
-  id           String   @id @default(uuid())
-  exams        String?
-  observations String?
-  paciente     Paciente @relation(fields: [pacienteId], references: [id])
-  pacienteId   String
-  medico       Medico   @relation(fields: [medicoId], references: [id])
-  medicoId     String
-  date         String
-  state        Boolean?
+  id            String   @id @default(uuid())
+  exams         String?
+  observations  String?
+  paciente      Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId    String
+  medico        Medico   @relation(fields: [medicoId], references: [id])
+  medicoId      String
+  date          String
+  consultaState State    @default(PENDENTE)
 }

@@ -1,6 +1,18 @@
+import { Consulta, Paciente, User } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 
-const VerPacienteModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) => {
+const VerPacienteModal = ({
+	open,
+	setOpen,
+	paciente,
+}: {
+	open: boolean;
+	setOpen: Dispatch<SetStateAction<boolean>>;
+	paciente: Paciente & {
+		Consulta: Consulta[];
+		user: User;
+	};
+}) => {
 	const handleClose = () => setOpen(false);
 
 	if (!open) return null;
@@ -36,7 +48,99 @@ const VerPacienteModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch<
 						</div>
 						{/* Modal body */}
 
-						<div className="leading-relaxed p-6 space-y-6">Ola</div>
+						<div className="leading-relaxed p-6 space-y-2">
+							<>
+								<div className="mt-2 grid grid-cols-2 gap-2">
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											Nome
+										</label>
+										<input
+											defaultValue={paciente.user.firstName}
+											type={"text"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											Apelido
+										</label>
+										<input
+											defaultValue={paciente.user.lastName}
+											type={"text"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+								</div>
+								<div className="mt-2 grid grid-cols-2 gap-2">
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											BI
+										</label>
+										<input
+											defaultValue={paciente.user.bi}
+											type={"text"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											Data de Nacimento
+										</label>
+										<input
+											defaultValue={paciente.user.birthday}
+											type={"date"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+								</div>
+								<div className="mt-2 grid grid-cols-2 gap-2">
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											E-mail
+										</label>
+										<input
+											defaultValue={paciente.user.email}
+											type={"email"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											Semanas de Gravidez
+										</label>
+										<input
+											defaultValue={paciente.weeks}
+											type={"number"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+								</div>
+								<div className="mt-2 grid grid-cols-2 gap-2">
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											Estado
+										</label>
+										<input
+											defaultValue={paciente.state === true ? "Em Processo" : "Finalizado"}
+											type={"text"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+									<div>
+										<label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+											Consultas Totais
+										</label>
+										<input
+											defaultValue={paciente.Consulta.length}
+											type={"number"}
+											className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+										/>
+									</div>
+								</div>
+							</>
+						</div>
 					</div>
 				</div>
 			</div>
