@@ -1,80 +1,64 @@
+import Image from "next/image";
 import React from "react";
+import medico from "../../../public/images/medico.jpg";
+import horario from "../../../public/images/horario.jpg";
+import registro from "../../../public/images/registro.jpg";
+import consultas from "../../../public/images/consultas.jpg";
 
 const Cta = () => {
 	return (
-		<div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+		<div
+			id="como"
+			className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
+		>
 			<div className="flex flex-col mb-6 lg:justify-between lg:flex-row md:mb-8">
 				<h2 className="max-w-lg mb-5 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-none md:mb-6 group">
-					<span className="inline-block mb-1 sm:mb-4">
-						There is no must in art
-						<br className="hidden md:block" />
-						because art is free.
-					</span>
+					<span className="inline-block mb-1 sm:mb-4">Como Fazemos?</span>
 					<div className="h-1 ml-auto duration-300 origin-left transform bg-blue-600 scale-x-30 group-hover:scale-x-100" />
 				</h2>
 			</div>
 			<div className="grid gap-6 row-gap-5 mb-8 lg:grid-cols-4 sm:row-gap-6 sm:grid-cols-2">
-				<a href="/" aria-label="View Item">
+				<a>
 					<div className="relative overflow-hidden transition duration-200 transform rounded shadow-lg hover:-translate-y-2 hover:shadow-2xl">
-						<img
-							className="object-cover w-full h-56 md:h-64 xl:h-80"
-							src="https://images.pexels.com/photos/3184311/pexels-photo-3184311.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-							alt=""
-						/>
+						<Image className="object-cover w-full h-56 md:h-64 xl:h-80" src={medico} alt="" />
 						<div className="absolute inset-0 px-6 py-4 transition-opacity duration-200 bg-blue-700 bg-opacity-75 opacity-0 hover:opacity-100">
-							<p className="mb-4 text-lg font-bold text-gray-100">Mona Lisa</p>
+							<p className="mb-4 text-lg font-bold text-gray-100">Medicos</p>
 							<p className="text-sm tracking-wide text-gray-300">
-								Painted between 1503 and 1517, Da Vinci’s alluring portrait has been dogged by two
-								questions since the day it was made: Who’s the subject and why is she smiling?
+								Temos medicos especializados e de confiança
 							</p>
 						</div>
 					</div>
 				</a>
-				<a href="/" aria-label="View Item">
+				<a>
 					<div className="relative overflow-hidden transition duration-200 transform rounded shadow-lg hover:-translate-y-2 hover:shadow-2xl">
-						<img
-							className="object-cover w-full h-56 md:h-64 xl:h-80"
-							src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-							alt=""
-						/>
+						<Image className="object-cover w-full h-56 md:h-64 xl:h-80" src={horario} alt="" />
 						<div className="absolute inset-0 px-6 py-4 transition-opacity duration-200 bg-blue-700 bg-opacity-75 opacity-0 hover:opacity-100">
-							<p className="mb-4 text-lg font-bold text-gray-100">The Starry Night</p>
+							<p className="mb-4 text-lg font-bold text-gray-100">Horário</p>
 							<p className="text-sm tracking-wide text-gray-300">
-								Vincent Van Gogh’s most popular painting, The Starry Night was created by Van Gogh at
-								the asylum in Saint-Rémy, where he’d committed himself in 1889.
+								Fazemos isso a tempo e hora que desejares!
 							</p>
 						</div>
 					</div>
 				</a>
-				<a href="/" aria-label="View Item">
+				<a>
 					<div className="relative overflow-hidden transition duration-200 transform rounded shadow-lg hover:-translate-y-2 hover:shadow-2xl">
-						<img
-							className="object-cover w-full h-56 md:h-64 xl:h-80"
-							src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-							alt=""
-						/>
+						<Image className="object-cover w-full h-56 md:h-64 xl:h-80" src={registro} alt="" />
 						<div className="absolute inset-0 px-6 py-4 transition-opacity duration-200 bg-blue-700 bg-opacity-75 opacity-0 hover:opacity-100">
-							<p className="mb-4 text-lg font-bold text-gray-100">The Kiss</p>
+							<p className="mb-4 text-lg font-bold text-gray-100">Registos</p>
 							<p className="text-sm tracking-wide text-gray-300">
-								Opulently gilded and extravagantly patterned, The Kiss, Gustav Klimt’s fin-de-siècle
-								portrayal of intimacy, is a mix of Symbolism and Vienna Jugendstil, the Austrian variant
-								of Art Nouveau.
+								Guardamos todos os dados necessarios para teres as tuas consultas a tempo e hora
 							</p>
 						</div>
 					</div>
 				</a>
-				<a href="/" aria-label="View Item">
+				<a>
 					<div className="relative overflow-hidden transition duration-200 transform rounded shadow-lg hover:-translate-y-2 hover:shadow-2xl">
-						<img
-							className="object-cover w-full h-56 md:h-64 xl:h-80"
-							src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-							alt=""
-						/>
+						<Image className="object-cover w-full h-56 md:h-64 xl:h-80" src={consultas} alt="" />
 						<div className="absolute inset-0 px-6 py-4 transition-opacity duration-200 bg-blue-700 bg-opacity-75 opacity-0 hover:opacity-100">
-							<p className="mb-4 text-lg font-bold text-gray-100">The Harvesters</p>
+							<p className="mb-4 text-lg font-bold text-gray-100">Consultas</p>
 							<p className="text-sm tracking-wide text-gray-300">
-								Bruegel’s fanfare for the common man is considered one of the defining works of Western
-								art. This composition was one of six created on the theme of the seasons.
+								Se tiver sugestões de melhorias para ter melhor experiencia de consultas não exite em
+								nos contactar
 							</p>
 						</div>
 					</div>

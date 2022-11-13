@@ -10,7 +10,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  PACIENTE
+  MEDICO
+  ADMIN
+}
+
 model User {
-  id   String @id @default(uuid())
-  name String
+  id        String    @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  bi        String
+  birthday  String
+  role      Role
+  paciente  Paciente?
+  Medico    Medico?
+}
+
+model Paciente {
+  id       String     @id @default(uuid())
+  state    Boolean
+  weeks    Int
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String     @unique
+  Consulta Consulta[]
+}
+
+model Medico {
+  id       String     @id @default(uuid())
+  time     String
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String     @unique
+  Consulta Consulta[]
+}
+
+model Consulta {
+  id           String   @id @default(uuid())
+  exams        String?
+  observations String?
+  paciente     Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId   String
+  medico       Medico   @relation(fields: [medicoId], references: [id])
+  medicoId     String
+  date         String
+  state        Boolean?
 }

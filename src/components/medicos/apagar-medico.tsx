@@ -1,13 +1,43 @@
-import { Dispatch, SetStateAction } from "react";
+import { Medico, User } from "@prisma/client";
+import { ArrowCycle } from "akar-icons";
+import { Dispatch, SetStateAction, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { trpc } from "../../lib/trpc";
 
-const ApagarMedicoModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) => {
+const ApagarMedicoModal = ({
+	open,
+	setOpen,
+	medico,
+}: {
+	open: boolean;
+	setOpen: Dispatch<SetStateAction<boolean>>;
+	medico: Medico & { user: User };
+}) => {
 	const handleClose = () => setOpen(false);
+	const [loader, setLoader] = useState(false);
+	const medicoMutation = trpc.medico.delete.useMutation();
+	const userMutation = trpc.user.delete.useMutation();
+
+	const handleDelete = async () => {
+		try {
+			setLoader(true);
+			await medicoMutation.mutateAsync({ userId: medico.userId });
+			await userMutation.mutateAsync({ id: medico.userId });
+			toast.success("Apagado com sucesso!");
+			setOpen(false);
+		} catch (error) {
+			toast.error("Algum erro aconteceu");
+		} finally {
+			setLoader(false);
+		}
+	};
 
 	if (!open) return null;
 
 	return (
 		<div className="max-w-2xl mx-auto">
 			<div className="overflow-x-hidden bg-black/10 backdrop-blur-sm overflow-y-auto fixed h-full left-0 right-0 inset-0 z-50 justify-center items-center">
+				<ToastContainer />
 				<div className="top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 relative w-full max-w-2xl h-auto">
 					{/* Modal content */}
 					<div className="bg-white rounded-lg shadow-md relative dark:bg-black m-2 dark:border dark:border-zinc-500">
@@ -36,7 +66,27 @@ const ApagarMedicoModal = ({ open, setOpen }: { open: boolean; setOpen: Dispatch
 						</div>
 						{/* Modal body */}
 
-						<div className="leading-relaxed p-6 space-y-6">Ola</div>
+						<div className="leading-relaxed p-6 space-y-6">
+							<span>Gostaria de apagar o Medico</span>
+							<span>
+								&nbsp;"{`${medico.user.bi} - ${medico.user.firstName} ${medico.user.lastName}`}"&nbsp;?
+							</span>
+							<div className="flex gap-4 w-full">
+								<button
+									onClick={handleDelete}
+									className="bg-red-500 w-full text-white py-2  rounded shadow hover:bg-red-600 focus:ring-2 focus:ring-red-300 flex items-center justify-center gap-2"
+								>
+									Apagar
+									{!loader ? null : <ArrowCycle size={16} className="animate-spin" />}
+								</button>
+								<button
+									onClick={handleClose}
+									className="bg-zinc-500 w-full text-white py-2  rounded shadow hover:bg-zinc-600 focus:ring-2 focus:zinc-red-300"
+								>
+									Fechar
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
