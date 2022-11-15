@@ -44,7 +44,7 @@ const NovaAgenda = () => {
 	const [medico] = useAtom(userAtom);
 	const novasAgendas = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
 	if (novasAgendas.isLoading) return <Loading />;
-	const novasAgendasFiltradas = novasAgendas.data?.filter((agenda) => agenda.consultaState === "PENDENTE");
+	const novasAgendasFiltradas = novasAgendas.data?.filter((agenda: any) => agenda.consultaState === "PENDENTE");
 
 	return (
 		<div>
