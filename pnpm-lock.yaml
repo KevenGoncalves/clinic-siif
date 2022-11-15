@@ -14,6 +14,7 @@ specifiers:
   '@types/react-dom': 18.0.8
   akar-icons: ^1.9.22
   autoprefixer: ^10.4.13
+  emailjs-com: ^3.2.0
   jotai: ^1.9.2
   next: 13.0.1
   postcss: ^8.4.18
@@ -39,6 +40,7 @@ dependencies:
   '@types/react': 18.0.24
   '@types/react-dom': 18.0.8
   akar-icons: 1.9.22_react@18.2.0
+  emailjs-com: 3.2.0
   jotai: 1.9.2_react@18.2.0
   next: 13.0.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -577,6 +579,12 @@ packages:
   /electron-to-chromium/1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
+
+  /emailjs-com/3.2.0:
+    resolution: {integrity: sha512-Prbz3E1usiAwGjMNYRv6EsJ5c373cX7/AGnZQwOfrpNJrygQJ15+E9OOq4pU8yC977Z5xMetRfc3WmDX6RcjAA==}
+    engines: {node: '>=12.0.0'}
+    deprecated: The SDK name changed to @emailjs/browser
+    dev: false
 
   /es5-ext/0.10.62:
     resolution: {integrity: sha512-BHLqn0klhEpnOKSrzn/Xsz2UIW8j+cGmo9JLzr8BiUapV8hPL9+FliFqjwr9ngW7jWdnxv6eO+/LqyhJVqgrjA==}

@@ -31,23 +31,29 @@ const useStatistics = (
 		proximaConsulta: "-",
 	});
 
-	useMemo(() => {
-		data?.map((consulta) => {
-			if (consulta.exams !== null) setState((state) => ({ ...state, examesTotais: state.examesTotais + 1 }));
-			if (consulta.observations !== null)
-				setState((state) => ({ ...state, observacoesTotais: state.observacoesTotais + 1 }));
-			if (consulta.consultaState === "CONCLUIDA")
-				setState((state) => ({ ...state, consultasTotais: state.consultasTotais + 1 }));
-		});
+	console.log(data);
 
-		if (data != undefined) {
+	useMemo(() => {
+		if (data) {
+			data?.map((consulta) => {
+				if (consulta.exams !== null) setState((state) => ({ ...state, examesTotais: state.examesTotais + 1 }));
+				if (consulta.observations !== null)
+					setState((state) => ({ ...state, observacoesTotais: state.observacoesTotais + 1 }));
+				if (consulta.consultaState === "CONCLUIDA")
+					setState((state) => ({ ...state, consultasTotais: state.consultasTotais + 1 }));
+			});
+
 			setState((state) => ({
 				...state,
-				ultimaConsulta: data![data!.length - 2]?.date,
-				proximaConsulta: data![data!.length - 1]?.date,
+				ultimaConsulta: data![1]?.date,
 			}));
 
-			contextUtils.medico.byId.fetch({ id: data![data!.length - 1]?.medicoId ?? "" }).then((data) =>
+			setState((state) => ({
+				...state,
+				proximaConsulta: data![0]?.date,
+			}));
+
+			contextUtils.medico.byId.fetch({ id: data![1]?.medicoId ?? "" }).then((data) =>
 				setState((state) => ({
 					...state,
 					medico: `${data?.user.firstName ?? ""} ${data?.user.lastName ?? ""}`,
@@ -64,7 +70,9 @@ const Dashboard = () => {
 	const [paciente] = useAtom(userAtom);
 	const consultas = trpc.consulta.allByPacienteId.useQuery({ pacienteId: paciente?.paciente?.id! });
 	const statistics = useStatistics(consultas.data);
-	const dates = consultas.data?.map((consulta) => consulta.date);
+	const dates = consultas.data
+		?.filter((consulta) => consulta.consultaState === "PROGRESSO" || consulta.consultaState === "CONCLUIDA")
+		.map((consulta) => consulta.date);
 
 	if (consultas.isLoading) return <Loading />;
 

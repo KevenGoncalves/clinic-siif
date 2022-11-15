@@ -100,6 +100,7 @@ const Login = () => {
 				setCreateUser({ bi: "", birthday: "", email: "", firstName: "", lastName: "", password: "" });
 			}
 		} catch (error) {
+			console.log(error);
 			toast.error("Algum erro aconteceu!");
 		} finally {
 			setLoader(false);

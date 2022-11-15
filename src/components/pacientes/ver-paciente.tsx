@@ -1,5 +1,6 @@
 import { Consulta, Paciente, User } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
+import { ToastContainer } from "react-toastify";
 
 const VerPacienteModal = ({
 	open,
@@ -20,6 +21,7 @@ const VerPacienteModal = ({
 	return (
 		<div className="max-w-2xl mx-auto">
 			<div className="overflow-x-hidden bg-black/10 backdrop-blur-sm overflow-y-auto fixed h-full left-0 right-0 inset-0 z-50 justify-center items-center">
+				<ToastContainer />
 				<div className="top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 relative w-full max-w-2xl h-auto">
 					{/* Modal content */}
 					<div className="bg-white rounded-lg shadow-md relative dark:bg-black m-2 dark:border dark:border-zinc-500">

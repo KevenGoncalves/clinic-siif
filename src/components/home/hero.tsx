@@ -20,7 +20,7 @@ const Hero = () => {
 					<div className="flex flex-col items-center max-w-2xl md:px-8">
 						<div className="max-w-xl  md:mx-auto sm:text-center lg:max-w-2xl mb-2">
 							<h2 className="max-w-lg  font-sans text-3xl font-bold leading-none tracking-tight text-white sm:text-4xl md:mx-auto">
-								Sejá Bem Vindo ao Sistema de Consultas Pré Natais
+								Seja Bem Vindo ao Sistema de Consultas Pré Natais
 							</h2>
 						</div>
 						<p className="max-w-md mb-10 text-xs text-gray-100 sm:text-sm md:text-center">

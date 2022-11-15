@@ -1,14 +1,23 @@
-import { Bell, Heart, LinkOut } from "akar-icons";
+import { Calendar as CalendarIcon, Heart, LinkOut } from "akar-icons";
 import React, { ReactNode, useState } from "react";
 import MarcarConsultaModal from "../consultas/marcar-consulta";
 import { useRouter } from "next/router";
 import CriarMedicoModal from "../medicos/criar-medico";
+import { Calendar } from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { trpc } from "../../lib/trpc";
+import { useAtom } from "jotai";
+import { userAtom } from "../../atom/user-atom";
 
 const Navbar = () => {
 	const [consulta, setConsulta] = useState(false);
 	const [drop, setDrop] = useState(false);
 	const [create, setCreate] = useState(false);
 	const router = useRouter();
+	const [medico] = useAtom(userAtom);
+	const consultas = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
+	const consultasFiltradas = consultas.data?.filter((consulta) => consulta.consultaState === "PROGRESSO");
+	const [value, onChange] = useState(new Date());
 
 	const handleDrop = () => setDrop(!drop);
 	const handleOpen = () => setConsulta(true);
@@ -46,40 +55,38 @@ const Navbar = () => {
 							</button>
 						</li>
 					) : null}
-					{/* <li>
-						<button
-							onClick={handleDrop}
-							className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-						>
-							<Bell strokeWidth={2} size={24} />
-						</button>
-
-						
-						<div
-							className={`${
-								drop ? "h-60 visible" : "h-0 invisible"
-							} absolute -right-4 z-20 overflow-y-clip w-48 transition-all duration-500 py-2 mt-4 bg-white rounded-md shadow-xl dark:bg-gray-800`}
-						>
-							<a
-								href="#"
-								className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+					{router.asPath == "/agendas" ? (
+						<li>
+							<button
+								onClick={handleDrop}
+								className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
 							>
-								your profile
-							</a>
-							<a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-								Your projects
-							</a>
-							<a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-								Help
-							</a>
-							<a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-								Settings
-							</a>
-							<a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-								Sign Out
-							</a>
-						</div>
-					</li> */}
+								<CalendarIcon strokeWidth={2} size={24} />
+							</button>
+
+							<div
+								className={`${
+									drop ? "h-80 visible" : "h-0 invisible"
+								} absolute -right-4 z-20 overflow-y-clip  transition-all duration-500 py-2 mt-4 bg-white rounded-md shadow-xl dark:bg-gray-800`}
+							>
+								<div className="flex items-center justify-center ">
+									<Calendar
+										tileClassName={({ date, view }) => {
+											const newDates = consultasFiltradas?.map((d) =>
+												new Date(d.date).toDateString()
+											);
+
+											if (newDates?.includes(date.toDateString()))
+												return "!bg-zinc-700 !text-white hover:!bg-zinc-500";
+											return null;
+										}}
+										onChange={onChange}
+										value={value}
+									/>
+								</div>
+							</div>
+						</li>
+					) : null}
 				</ul>
 			</div>
 			<MarcarConsultaModal open={consulta} setOpen={setConsulta} />

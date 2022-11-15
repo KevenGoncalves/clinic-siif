@@ -25,10 +25,17 @@ const MarcarConsultaModal = ({ open, setOpen }: { open: boolean; setOpen: Dispat
 	const call = useMemo(() => {
 		setMarcarConsulta({
 			...marcarConsulta,
-			medicoId: medicos.isLoading ? "" : medicos.data![0].id,
+			medicoId: medicos.isLoading ? "" : medicos.data![0]?.id,
 			pacienteId: paciente?.paciente?.id!,
 		});
 	}, [medicos.data]);
+
+	function isInThePast(date: Date) {
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+
+		return date < today;
+	}
 
 	if (!open) return null;
 	if (medicos.isLoading) return <div>Loading</div>;
@@ -38,6 +45,12 @@ const MarcarConsultaModal = ({ open, setOpen }: { open: boolean; setOpen: Dispat
 		try {
 			setLoader(true);
 			const marcarParsed = consulta.parse(marcarConsulta);
+
+			if (isInThePast(new Date(marcarParsed.date))) {
+				toast.info("Escolha outra data que não tenha passado");
+				return;
+			}
+
 			await marcarMutation.mutateAsync(marcarParsed);
 			toast.success("Consulta Marcada, Espere pela Aprovação")!;
 			await pacienteConsultas.consulta.allByPacienteId.refetch({ pacienteId: paciente?.paciente?.id! });

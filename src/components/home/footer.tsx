@@ -1,7 +1,12 @@
-import { Heart } from "akar-icons";
-import React from "react";
+import { Heart, LinkOut } from "akar-icons";
+import React, { useState } from "react";
+import ReclamationModal from "./reclamation-modal";
 
 const Footer = () => {
+	const [modal, setModal] = useState(false);
+
+	const handleOpen = () => setModal(true);
+
 	return (
 		<div className="relative mt-16 bg-blue-600">
 			<svg
@@ -80,6 +85,20 @@ const Footer = () => {
 								</li>
 							</ul>
 						</div>
+						<div>
+							<p className="font-semibold tracking-wide text-teal-accent-400">Alguma preocupação?</p>
+							<ul className="mt-2 space-y-2">
+								<li>
+									<button
+										onClick={handleOpen}
+										className="cursor-pointer transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400 flex items-center gap-2"
+									>
+										Reclame Aqui
+										<LinkOut size={12} />
+									</button>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 				<div className="flex flex-col justify-between pt-5 pb-10 border-t border-deep-purple-accent-200 sm:flex-row">
@@ -105,6 +124,7 @@ const Footer = () => {
 						</a>
 					</div>
 				</div>
+				<ReclamationModal open={modal} setOpen={setModal} />
 			</div>
 		</div>
 	);

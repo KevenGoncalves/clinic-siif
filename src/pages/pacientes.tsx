@@ -44,7 +44,6 @@ const Pacientes = () => {
 	const pacientes = trpc.paciente.all.useQuery();
 
 	if (pacientes.isLoading) return <Loading />;
-	pacientes.data;
 
 	return (
 		<Layout>
