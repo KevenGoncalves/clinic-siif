@@ -16,7 +16,7 @@ const Navbar = () => {
 	const router = useRouter();
 	const [medico] = useAtom(userAtom);
 	const consultas = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
-	const consultasFiltradas = consultas.data?.filter((consulta) => consulta.consultaState === "PROGRESSO");
+	const consultasFiltradas = consultas.data?.filter((consulta: any) => consulta.consultaState === "PROGRESSO");
 	const [value, onChange] = useState(new Date());
 
 	const handleDrop = () => setDrop(!drop);
