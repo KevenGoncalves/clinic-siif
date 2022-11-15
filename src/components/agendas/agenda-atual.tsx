@@ -42,14 +42,14 @@ const Card = ({
 
 const AgendaAtual = () => {
 	const [medico] = useAtom(userAtom);
-	const agendaAtual = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
+	const agendaAtual: any = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
 	if (agendaAtual.isLoading) return <Loading />;
 
-	const agendaAtualFiltradas = agendaAtual?.data?.filter((agenda) => agenda.consultaState === "PROGRESSO");
+	const agendaAtualFiltradas = agendaAtual.data?.filter((agenda: any) => agenda.consultaState === "PROGRESSO");
 
 	return (
 		<div>
-			{agendaAtualFiltradas?.map((agenda, index) => (
+			{agendaAtualFiltradas?.map((agenda: any, index: any) => (
 				<Card content={agenda} key={index} />
 			))}
 			{agendaAtualFiltradas?.length === 0 ? <NoContent title="Sem Agendas" /> : null}
