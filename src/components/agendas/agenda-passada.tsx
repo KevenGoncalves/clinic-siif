@@ -9,14 +9,7 @@ import ObservationModal from "../consultas/observation-modal";
 import Loading from "../shared/loading";
 import NoContent from "../shared/no-content";
 
-const Card = ({
-	content,
-}: {
-	content: Consulta & {
-		paciente: Paciente;
-		medico: Medico;
-	};
-}) => {
+const Card = ({ content }: { content: any }) => {
 	const getPaciente = trpc.paciente.byUserId.useQuery({ userId: content.paciente.userId });
 	const [exams, setExams] = useState(false);
 	const [observation, setObservations] = useState(false);
@@ -28,7 +21,7 @@ const Card = ({
 			<div>
 				{getPaciente.data?.user.firstName} {getPaciente.data?.user.lastName} - {content.date}
 			</div>
-			{content?.consultaState === "REJEITADA" ? (
+			{content.consultaState === "REJEITADA" ? (
 				<div className="text-red-500 p-1" title="Rejeitada">
 					<Cross />
 				</div>
