@@ -12,6 +12,7 @@ import { userAtom } from "../atom/user-atom";
 import Loading from "../components/shared/loading";
 import { Consulta, Medico, Paciente } from "@prisma/client";
 import NoContent from "../components/shared/no-content";
+import Head from "next/head";
 
 const useStatistics = (data: any) => {
 	const contextUtils = trpc.useContext();
@@ -70,79 +71,86 @@ const Dashboard = () => {
 	if (consultas.isLoading) return <Loading />;
 
 	return (
-		<Layout>
-			<div className="px-10 pb-10">
-				<Title title="Estatisticas" />
-				<div className="flex gap-4">
-					<Stat>
-						<div className="flex items-center my-4 justify-between">
-							<div className="flex gap-4 items-center">
-								<File size={24} strokeWidth={2} />
-								<span className="text-lg">Consultas Totais:</span>
+		<>
+			<Head>
+				<title>Consultas</title>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+			<Layout>
+				<div className="px-10 pb-10">
+					<Title title="Estatisticas" />
+					<div className="flex gap-4">
+						<Stat>
+							<div className="flex items-center my-4 justify-between">
+								<div className="flex gap-4 items-center">
+									<File size={24} strokeWidth={2} />
+									<span className="text-lg">Consultas Totais:</span>
+								</div>
+								<div className="text-lg">{statistics.consultasTotais}</div>
 							</div>
-							<div className="text-lg">{statistics.consultasTotais}</div>
-						</div>
-						<div className="flex items-center my-4 justify-between">
-							<div className="flex gap-4 items-center">
-								<Newspaper size={24} strokeWidth={2} />
-								<span className="text-lg">Exames Totais:</span>
+							<div className="flex items-center my-4 justify-between">
+								<div className="flex gap-4 items-center">
+									<Newspaper size={24} strokeWidth={2} />
+									<span className="text-lg">Exames Totais:</span>
+								</div>
+								<div className="text-lg">{statistics.examesTotais}</div>
 							</div>
-							<div className="text-lg">{statistics.examesTotais}</div>
-						</div>
-						<div className="flex items-center my-4 justify-between">
-							<div className="flex gap-4 items-center">
-								<EyeOpen size={24} strokeWidth={2} />
-								<span className="text-lg">Observações Totais:</span>
+							<div className="flex items-center my-4 justify-between">
+								<div className="flex gap-4 items-center">
+									<EyeOpen size={24} strokeWidth={2} />
+									<span className="text-lg">Observações Totais:</span>
+								</div>
+								<div className="text-lg">{statistics.consultasTotais}</div>
 							</div>
-							<div className="text-lg">{statistics.consultasTotais}</div>
-						</div>
-						<div className="flex items-center my-4 justify-between">
-							<div className="flex gap-4 items-center">
-								<PeopleMultiple size={24} strokeWidth={2} />
-								<span className="text-lg">Médico:</span>
+							<div className="flex items-center my-4 justify-between">
+								<div className="flex gap-4 items-center">
+									<PeopleMultiple size={24} strokeWidth={2} />
+									<span className="text-lg">Médico:</span>
+								</div>
+								<div className="text-lg">{statistics.medico}</div>
 							</div>
-							<div className="text-lg">{statistics.medico}</div>
-						</div>
-						<div className="flex items-center my-4 justify-between">
-							<div className="flex gap-4 items-center">
-								<IconCalendar size={24} strokeWidth={2} />
-								<span className="text-lg">Ultima Consulta:</span>
+							<div className="flex items-center my-4 justify-between">
+								<div className="flex gap-4 items-center">
+									<IconCalendar size={24} strokeWidth={2} />
+									<span className="text-lg">Ultima Consulta:</span>
+								</div>
+								<div className="text-lg">{statistics.ultimaConsulta}</div>
 							</div>
-							<div className="text-lg">{statistics.ultimaConsulta}</div>
-						</div>
-						<div className="flex  items-center my-4 justify-between">
-							<div className="flex gap-4 items-center">
-								<File size={24} strokeWidth={2} />
-								<span className="text-lg">Próxima Consulta:</span>
+							<div className="flex  items-center my-4 justify-between">
+								<div className="flex gap-4 items-center">
+									<File size={24} strokeWidth={2} />
+									<span className="text-lg">Próxima Consulta:</span>
+								</div>
+								<div className="text-lg">{statistics.ultimaConsulta}</div>
 							</div>
-							<div className="text-lg">{statistics.ultimaConsulta}</div>
-						</div>
-					</Stat>
-					<Stat>
-						<div className="flex items-center justify-center ">
-							<Calendar
-								onChange={onChange}
-								value={value}
-								tileClassName={({ date, view }) => {
-									const newDates = dates!.map((d) => new Date(d).toDateString());
+						</Stat>
+						<Stat>
+							<div className="flex items-center justify-center ">
+								<Calendar
+									onChange={onChange}
+									value={value}
+									tileClassName={({ date, view }) => {
+										const newDates = dates!.map((d) => new Date(d).toDateString());
 
-									if (newDates.includes(date.toDateString()))
-										return "!bg-zinc-700 !text-white hover:!bg-zinc-500";
-									return null;
-								}}
-							/>
-						</div>
-					</Stat>
+										if (newDates.includes(date.toDateString()))
+											return "!bg-zinc-700 !text-white hover:!bg-zinc-500";
+										return null;
+									}}
+								/>
+							</div>
+						</Stat>
+					</div>
+					<Title title="Consultas" />
+					<div>
+						{consultas.data?.map((consulta, index) => (
+							<Card consulta={consulta} key={index} />
+						))}
+						{consultas.data?.length === 0 ? <NoContent title="Sem Consultas" /> : null}
+					</div>
 				</div>
-				<Title title="Consultas" />
-				<div>
-					{consultas.data?.map((consulta, index) => (
-						<Card consulta={consulta} key={index} />
-					))}
-					{consultas.data?.length === 0 ? <NoContent title="Sem Consultas" /> : null}
-				</div>
-			</div>
-		</Layout>
+			</Layout>
+		</>
 	);
 };
 

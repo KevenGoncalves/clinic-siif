@@ -1,4 +1,5 @@
 import { ArrowCycle } from "akar-icons";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
@@ -32,10 +33,17 @@ const Process = () => {
 	});
 
 	return (
-		<div className="w-full h-screen flex items-center justify-center text-blue-500">
-			<ArrowCycle size={96} className="animate-spin" />
-			<ToastContainer />
-		</div>
+		<>
+			<Head>
+				<title>Processando...</title>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+			<div className="w-full h-screen flex items-center justify-center text-blue-500">
+				<ArrowCycle size={96} className="animate-spin" />
+				<ToastContainer />
+			</div>
+		</>
 	);
 };
 

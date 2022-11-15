@@ -5,6 +5,7 @@ import { ArrowRepeat, Check, Plus } from "akar-icons";
 import NovaAgenda from "../components/agendas/nova-agenda";
 import AgendaAtual from "../components/agendas/agenda-atual";
 import AgendaPassada from "../components/agendas/agenda-passada";
+import Head from "next/head";
 
 const AgendasTabs = () => (
 	<Tabs>
@@ -48,11 +49,18 @@ const AgendasTabs = () => (
 
 const Agendas = () => {
 	return (
-		<Layout>
-			<div className="px-10 pb-10">
-				<AgendasTabs />
-			</div>
-		</Layout>
+		<>
+			<Head>
+				<title>Agendas</title>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+			<Layout>
+				<div className="px-10 pb-10">
+					<AgendasTabs />
+				</div>
+			</Layout>
+		</>
 	);
 };
 

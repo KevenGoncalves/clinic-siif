@@ -1,5 +1,6 @@
 import { Consulta, Paciente, User } from "@prisma/client";
 import { LinkOut } from "akar-icons";
+import Head from "next/head";
 import React, { useState } from "react";
 import VerPacienteModal from "../components/pacientes/ver-paciente";
 import Layout from "../components/shared/layout";
@@ -46,17 +47,24 @@ const Pacientes = () => {
 	if (pacientes.isLoading) return <Loading />;
 
 	return (
-		<Layout>
-			<div className="px-10 pb-10">
-				<Title title="Pacientes" />
-				<div>
-					{pacientes.data?.map((paciente, index) => (
-						<Card content={paciente} key={index} />
-					))}
-					{pacientes.data?.length === 0 ? <NoContent title="Sem Pacientes" /> : null}
+		<>
+			<Head>
+				<title>Pacientes</title>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+			<Layout>
+				<div className="px-10 pb-10">
+					<Title title="Pacientes" />
+					<div>
+						{pacientes.data?.map((paciente, index) => (
+							<Card content={paciente} key={index} />
+						))}
+						{pacientes.data?.length === 0 ? <NoContent title="Sem Pacientes" /> : null}
+					</div>
 				</div>
-			</div>
-		</Layout>
+			</Layout>
+		</>
 	);
 };
 

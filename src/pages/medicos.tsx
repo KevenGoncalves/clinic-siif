@@ -1,5 +1,6 @@
 import { Medico, User } from "@prisma/client";
 import { Cross, LinkOut } from "akar-icons";
+import Head from "next/head";
 import React, { useState } from "react";
 import ApagarMedicoModal from "../components/medicos/apagar-medico";
 import VerMedicoModal from "../components/medicos/ver-medico";
@@ -39,17 +40,24 @@ const Medicos = () => {
 	if (medicos.isLoading) return <Loading />;
 
 	return (
-		<Layout>
-			<div className="px-10 pb-10">
-				<Title title="Medicos" />
-				<div>
-					{medicos.data?.map((medico, index) => (
-						<Card key={index} medico={medico} />
-					))}
-					{medicos.data?.length === 0 ? <NoContent title="Sem Médicos" /> : null}
+		<>
+			<Head>
+				<title>Médicos</title>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+			<Layout>
+				<div className="px-10 pb-10">
+					<Title title="Medicos" />
+					<div>
+						{medicos.data?.map((medico, index) => (
+							<Card key={index} medico={medico} />
+						))}
+						{medicos.data?.length === 0 ? <NoContent title="Sem Médicos" /> : null}
+					</div>
 				</div>
-			</div>
-		</Layout>
+			</Layout>
+		</>
 	);
 };
 
