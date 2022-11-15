@@ -1,6 +1,6 @@
 # Adicionar :
 
 -   [x] Lista de Reclamações
--   [x] Agendas
+-   [x] Agendas passadas não aceitar
 -   [-] Notificações para email
--   Trocar a base de dados para scale grid
+-   [x] Trocar a base de dados para scale grid

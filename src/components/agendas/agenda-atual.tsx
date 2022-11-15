@@ -44,7 +44,8 @@ const AgendaAtual = () => {
 	const [medico] = useAtom(userAtom);
 	const agendaAtual = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
 	if (agendaAtual.isLoading) return <Loading />;
-	const agendaAtualFiltradas = agendaAtual.data?.filter((agenda) => agenda.consultaState === "PROGRESSO");
+
+	const agendaAtualFiltradas = agendaAtual?.data?.filter((agenda) => agenda.consultaState === "PROGRESSO");
 
 	return (
 		<div>
