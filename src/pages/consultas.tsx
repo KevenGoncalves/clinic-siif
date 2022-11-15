@@ -13,14 +13,7 @@ import Loading from "../components/shared/loading";
 import { Consulta, Medico, Paciente } from "@prisma/client";
 import NoContent from "../components/shared/no-content";
 
-const useStatistics = (
-	data:
-		| (Consulta & {
-				paciente: Paciente;
-				medico: Medico;
-		  })[]
-		| undefined
-) => {
+const useStatistics = (data: any) => {
 	const contextUtils = trpc.useContext();
 	const [state, setState] = useState({
 		consultasTotais: 0,
@@ -35,7 +28,7 @@ const useStatistics = (
 
 	useMemo(() => {
 		if (data) {
-			data?.map((consulta) => {
+			data?.map((consulta: any) => {
 				if (consulta.exams !== null) setState((state) => ({ ...state, examesTotais: state.examesTotais + 1 }));
 				if (consulta.observations !== null)
 					setState((state) => ({ ...state, observacoesTotais: state.observacoesTotais + 1 }));
