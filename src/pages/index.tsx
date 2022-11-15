@@ -1,4 +1,4 @@
-import { Head } from "next/document";
+import Head from "next/head";
 import Cta from "../components/home/cta";
 import Features from "../components/home/features";
 import Footer from "../components/home/footer";
