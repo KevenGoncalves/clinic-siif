@@ -56,7 +56,7 @@ export const consulaRouter = router({
 		)
 		.mutation(async ({ input }) => {
 			return await prisma.consulta.create({
-				data: { ...input, consultaState: "PENDENTE" },
+				data: { ...input, consultaState: "PENDENTE" } as any,
 			});
 		}),
 	delete: publicProcedure
@@ -85,7 +85,7 @@ export const consulaRouter = router({
 		.mutation(async ({ input }) => {
 			return await prisma.consulta.update({
 				where: { id: input.id },
-				data: input,
+				data: input as any,
 			});
 		}),
 });
