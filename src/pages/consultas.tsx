@@ -71,7 +71,7 @@ const Dashboard = () => {
 	const consultas = trpc.consulta.allByPacienteId.useQuery({ pacienteId: paciente?.paciente?.id! });
 	const statistics = useStatistics(consultas.data);
 	const dates = consultas.data
-		?.filter((consulta) => consulta.consultaState === "PROGRESSO" || consulta.consultaState === "CONCLUIDA")
+		?.filter((consulta: any) => consulta.consultaState === "PROGRESSO" || consulta.consultaState === "CONCLUIDA")
 		.map((consulta) => consulta.date);
 
 	if (consultas.isLoading) return <Loading />;
