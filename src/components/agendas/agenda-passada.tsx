@@ -28,7 +28,7 @@ const Card = ({
 			<div>
 				{getPaciente.data?.user.firstName} {getPaciente.data?.user.lastName} - {content.date}
 			</div>
-			{content.consultaState === "REJEITADA" ? (
+			{(content.consultaState as any) === "REJEITADA" ? (
 				<div className="text-red-500 p-1" title="Rejeitada">
 					<Cross />
 				</div>
