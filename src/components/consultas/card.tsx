@@ -13,14 +13,7 @@ const States = ({ state }: { state: any }) => {
 	return <div className="bg-zinc-500 rounded-lg p-1 px-3 text-white">Esperando aprovação</div>;
 };
 
-const Card = ({
-	consulta,
-}: {
-	consulta: Consulta & {
-		medico: Medico | null;
-		paciente: Paciente | null;
-	};
-}) => {
+const Card = ({ consulta }: { consulta: any }) => {
 	const [exams, setExams] = useState(false);
 	const [observation, setObservations] = useState(false);
 	const { data } = trpc.medico.byId.useQuery({ id: consulta.medicoId });
