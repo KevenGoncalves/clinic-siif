@@ -2,7 +2,6 @@ import { router } from "../trpc";
 import { publicProcedure } from "../trpc";
 import { prisma } from "../../lib/prisma-client";
 import { z } from "zod";
-import { State } from "@prisma/client";
 
 export const consulaRouter = router({
 	all: publicProcedure.query(async () => {
