@@ -63,7 +63,7 @@ const AgendaPassada = () => {
 	const agendasPassadas = trpc.consulta.allByMedicoId.useQuery({ medicoId: medico?.Medico?.id! });
 	if (agendasPassadas.isLoading) return <Loading />;
 	const agendasPassadasFiltradas = agendasPassadas.data?.filter(
-		(agenda) => agenda.consultaState === "CONCLUIDA" || agenda.consultaState === "REJEITADA"
+		(agenda) => (agenda.consultaState as any) === "CONCLUIDA" || (agenda.consultaState as any) === "REJEITADA"
 	);
 
 	return (
