@@ -1,11 +1,11 @@
-import { Consulta, Medico, Paciente, State } from "@prisma/client";
+import { Consulta, Medico, Paciente } from "@prisma/client";
 import { EyeOpen, Newspaper } from "akar-icons";
 import { useState } from "react";
 import { trpc } from "../../lib/trpc";
 import ExamsModal from "./exams-modal";
 import ObservationModal from "./observation-modal";
 
-const States = ({ state }: { state: State }) => {
+const States = ({ state }: { state: any }) => {
 	if (state == "PROGRESSO") return <div className="bg-blue-500 rounded-lg p-1 px-3 text-white">Em Progresso</div>;
 	if (state == "CONCLUIDA") return <div className="bg-emerald-500 rounded-lg p-1 px-3 text-white">Concluida</div>;
 	if (state == "REJEITADA") return <div className="bg-red-500 rounded-lg p-1 px-3 text-white">Rejeitada</div>;
