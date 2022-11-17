@@ -8,7 +8,7 @@ const Footer = () => {
 	const handleOpen = () => setModal(true);
 
 	return (
-		<div className="relative mt-16 bg-blue-600">
+		<div id="reclamacao" className="relative mt-16 bg-blue-600">
 			<svg
 				className="absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 text-blue-600"
 				preserveAspectRatio="none"

@@ -41,6 +41,14 @@ const HomeNavbar = () => {
 								Como Fazemos
 							</a>
 						</li>
+						<li>
+							<a
+								onClick={() => Click("reclamacao")}
+								className="font-medium tracking-wide  transition-colors duration-200 hover:border-b-2 cursor-pointer"
+							>
+								Reclamações
+							</a>
+						</li>
 					</ul>
 					<ul className="flex items-center space-x-8 lg:flex">
 						<li>

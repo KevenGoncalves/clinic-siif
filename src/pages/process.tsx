@@ -29,7 +29,12 @@ const Process = () => {
 					router.push("/medicos");
 				}
 			})
-			.catch(() => toast.error("Algum erro aconteceu!"));
+			.catch(() => {
+				toast.error("Algum erro aconteceu!");
+				setTimeout(() => {
+					router.push("/login");
+				}, 2000);
+			});
 	});
 
 	return (
