@@ -1,7 +1,8 @@
 import { Consulta, Medico, Paciente } from "@prisma/client";
-import { EyeOpen, Newspaper } from "akar-icons";
+import { Cross, EyeOpen, Newspaper } from "akar-icons";
 import { useState } from "react";
 import { trpc } from "../../lib/trpc";
+import CancelarConsulta from "./cancelar-modal";
 import ExamsModal from "./exams-modal";
 import ObservationModal from "./observation-modal";
 
@@ -16,10 +17,12 @@ const States = ({ state }: { state: any }) => {
 const Card = ({ consulta }: { consulta: any }) => {
 	const [exams, setExams] = useState(false);
 	const [observation, setObservations] = useState(false);
+	const [del, setDel] = useState(false);
 	const { data } = trpc.medico.byId.useQuery({ id: consulta.medicoId });
 
 	const handleOpenExams = () => setExams(true);
 	const handleOpenObservations = () => setObservations(true);
+	const handleCancelar = () => setDel(true);
 
 	return (
 		<>
@@ -48,8 +51,21 @@ const Card = ({ consulta }: { consulta: any }) => {
 						</button>
 					</div>
 				) : null}
+				{consulta.consultaState == "PENDENTE" ? (
+					<div>
+						<button
+							aria-label="Observações"
+							title="Cancelar"
+							onClick={handleCancelar}
+							className="text-red-500 hover:text-red-400"
+						>
+							<Cross />
+						</button>
+					</div>
+				) : null}
 			</div>
 
+			<CancelarConsulta content={consulta} open={del} setOpen={setDel} />
 			<ObservationModal content={consulta.observations!} open={observation} setOpen={setObservations} />
 			<ExamsModal content={consulta.exams!} open={exams} setOpen={setExams} />
 		</>

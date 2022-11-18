@@ -35,19 +35,18 @@ const useStatistics = (data: any) => {
 					setState((state) => ({ ...state, observacoesTotais: state.observacoesTotais + 1 }));
 				if (consulta.consultaState === "CONCLUIDA")
 					setState((state) => ({ ...state, consultasTotais: state.consultasTotais + 1 }));
+				setState((state) => ({
+					...state,
+					ultimaConsulta: consulta?.date,
+				}));
+
+				setState((state) => ({
+					...state,
+					proximaConsulta: consulta?.date,
+				}));
 			});
 
-			setState((state) => ({
-				...state,
-				ultimaConsulta: data![1]?.date,
-			}));
-
-			setState((state) => ({
-				...state,
-				proximaConsulta: data![0]?.date,
-			}));
-
-			contextUtils.medico.byId.fetch({ id: data![1]?.medicoId ?? "" }).then((data) =>
+			contextUtils.medico.byId.fetch({ id: data![0]?.medicoId ?? "" }).then((data) =>
 				setState((state) => ({
 					...state,
 					medico: `${data?.user.firstName ?? ""} ${data?.user.lastName ?? ""}`,

@@ -1,4 +1,4 @@
-import { ArrowCycle } from "akar-icons";
+import { ArrowCycle, Clock } from "akar-icons";
 import { useAtom } from "jotai";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
@@ -29,6 +29,8 @@ const MarcarConsultaModal = ({ open, setOpen }: { open: boolean; setOpen: Dispat
 			pacienteId: paciente?.paciente?.id!,
 		});
 	}, [medicos.data]);
+
+	const medicoAtual = medicos.data?.filter((medico) => medico.id == marcarConsulta.medicoId);
 
 	function isInThePast(date: Date) {
 		const today = new Date();
@@ -127,6 +129,10 @@ const MarcarConsultaModal = ({ open, setOpen }: { open: boolean; setOpen: Dispat
 										className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
 									/>
 								</div>
+							</div>
+							<div className="flex items-center gap-2">
+								<Clock size={16} />
+								{medicoAtual![0]?.time}
 							</div>
 							<div className="space-x-4 flex justify-end">
 								<button
